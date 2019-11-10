@@ -4,13 +4,17 @@
 
 		// Function to view pages inside the supervisor view
 		public function view ($page = 'index'){
-			if(!file_exists(APPPATH.'views/supervisors/'.$page.'.php')){
+			if ($this->session->userdata('supervisor_id')){
+				if (!file_exists(APPPATH . 'views/supervisors/' . $page . '.php')) {
 					show_404();
+				}
+				$data['title'] = ucfirst($page);
+				$this->load->view('templates/header');
+				$this->load->view('supervisors/' . $page, $data);
+				$this->load->view('templates/footer');
+			} else {
+				redirect('supervisors');
 			}
-			$data['title'] = ucfirst($page);
-			$this->load->view('templates/header');
-			$this->load->view('supervisors/'.$page , $data);
-			$this->load->view('templates/footer');
 		}
 
 		// Function to view the default view which is the index view
@@ -36,6 +40,7 @@
 				// Calling function of supervisor model to check login credentials (returns supervisor_id)
 				$supervisor_id = $this->supervisor_model->login($username,$enc_password);
 				if($supervisor_id){
+					$this->session->set_userdata('supervisor_id', $supervisor_id);
 					$this->session->set_flashdata('login_success','You are now logged in');
 					redirect('supervisors/home');
 
@@ -96,5 +101,10 @@
 					redirect('supervisors/add_Supervisor');
 				}
 			}
+		}
+
+		public function logout(){
+			$this->session->sess_destroy();
+			redirect('supervisors');
 		}
 	}
