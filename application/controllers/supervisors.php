@@ -53,58 +53,72 @@
 
 		// Adding Trainees to database using this military identification number as username and password
 		public function addTrainee(){
-			$data['title'] = 'Add Trainee';
-			$this->form_validation->set_rules('username','Username','required');
-			$this->form_validation->set_rules('designation','Designation','required');
-			if($this->form_validation->run() === FALSE){
-				$this->session->set_flashdata('add_trainee', 'Form details were not entered properly. Try again.');
-				$this->load->view('templates/header');
-				$this->load->view('supervisors/add_Trainee' , $data);
-				$this->load->view('templates/footer');
-			} else {
-				$username = $this->input->post('username');
-				// Hashing password using md5 algorithm
-				$enc_password = md5($username);
-				$designation = $this->input->post('designation');
-				// Call to supervisor_model to execute the addTrainee function
-				if($this->supervisor_model->addTrainee($username,$enc_password,$designation)){
-					$this->session->set_flashdata('add_trainee', 'Trainee with ID '.$username.' has been successfully added.');
-					redirect('supervisors/add_Trainee');
+			if ($this->session->userdata('supervisor_id')){
+				$data['title'] = 'Add Trainee';
+				$this->form_validation->set_rules('username','Username','required');
+				$this->form_validation->set_rules('designation','Designation','required');
+				if($this->form_validation->run() === FALSE){
+					$this->session->set_flashdata('add_trainee', 'Form details were not entered properly. Try again.');
+					$this->load->view('templates/header');
+					$this->load->view('supervisors/add_Trainee' , $data);
+					$this->load->view('templates/footer');
 				} else {
-					redirect('supervisors/add_Trainee');
+					$username = $this->input->post('username');
+					// Hashing password using md5 algorithm
+					$enc_password = md5($username);
+					$designation = $this->input->post('designation');
+					// Call to supervisor_model to execute the addTrainee function
+					if($this->supervisor_model->addTrainee($username,$enc_password,$designation)){
+						$this->session->set_flashdata('add_trainee', 'Trainee with ID '.$username.' has been successfully added.');
+						redirect('supervisors/add_Trainee');
+					} else {
+						redirect('supervisors/add_Trainee');
+					}
 				}
+			} else {
+				redirect('supervisors');
 			}
 		}
 
 		public function viewTrainees(){
-			$data['trainees'] = $this->supervisor_model->getTrainees();
-			$this->load->view('templates/header');
-			$this->load->view('supervisors/view_trainee' , $data);
-			$this->load->view('templates/footer');
-		}
-
-		public function addSupervisor(){
-			$data['title'] = 'Add Supervisor';
-			$this->form_validation->set_rules('username','Username','required');
-			if($this->form_validation->run() === FALSE){
-				$this->session->set_flashdata('add_supervisor', 'Form details were not entered properly. Try again.');
+			if ($this->session->userdata('supervisor_id')){
+				$data['trainees'] = $this->supervisor_model->getTrainees();
 				$this->load->view('templates/header');
-				$this->load->view('supervisors/add_Supervisor' , $data);
+				$this->load->view('supervisors/view_trainee' , $data);
 				$this->load->view('templates/footer');
 			} else {
-				$username = $this->input->post('username');
-				$enc_password = md5($username);
-				if($this->supervisor_model->addSupervisor($username,$enc_password)){
-					$this->session->set_flashdata('add_supervisor', 'Supervisor with ID '.$username.' has been successfully added.');
-					redirect('supervisors/add_Supervisor');
-				} else {
-					redirect('supervisors/add_Supervisor');
-				}
+				redirect('supervisors');
 			}
 		}
 
+		public function addSupervisor(){
+			if ($this->session->userdata('supervisor_id')){
+				$data['title'] = 'Add Supervisor';
+				$this->form_validation->set_rules('username','Username','required');
+				if($this->form_validation->run() === FALSE){
+					$this->session->set_flashdata('add_supervisor', 'Form details were not entered properly. Try again.');
+					$this->load->view('templates/header');
+					$this->load->view('supervisors/add_Supervisor' , $data);
+					$this->load->view('templates/footer');
+				} else {
+					$username = $this->input->post('username');
+					$enc_password = md5($username);
+					if($this->supervisor_model->addSupervisor($username,$enc_password)){
+						$this->session->set_flashdata('add_supervisor', 'Supervisor with ID '.$username.' has been successfully added.');
+						redirect('supervisors/add_Supervisor');
+					} else {
+						redirect('supervisors/add_Supervisor');
+					}
+				}
+			} else {
+				redirect('supervisors');
+			}
+		}
+
+		// Logout script (Cleared session data)
 		public function logout(){
 			$this->session->sess_destroy();
 			redirect('supervisors');
 		}
+
 	}

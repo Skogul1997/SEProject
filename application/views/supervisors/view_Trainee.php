@@ -8,3 +8,4 @@
 		<br>
 	</div>
 <?php endforeach; } ?>
+<a href='logout'>Logout</a><br>

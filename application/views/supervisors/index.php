@@ -18,3 +18,5 @@
 	<button type='submit' class='btn btn-primary'>Login</button>
 
 <?php echo form_close(); ?>
+
+<a href='logout'>Logout</a><br>
