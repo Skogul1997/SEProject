@@ -8,7 +8,8 @@
 			$this->load->view('trainees/index' , $data);
 			$this->load->view('templates/footer');
 		}
-/*
+
+//trainee login
 		public function login(){
 
 			$data['title'] = 'Login';
@@ -29,20 +30,22 @@
 				$user_id = $this->trainee_model->login($username,$password);
 
 				if($user_id){
+					session_start();
 					$this->session->set_flashdata('user_loggedin','You are now logged in');
-
+					$_SESSION["user_id"] = $user_id;
+					$_SESSION["password"] = $password;
 					redirct('index');
 				} else {
 					$this->session->set_flashdata('login_failed','Login is Invalid');
-
 					redirect('trainees/login');
 				}
 
 			}
-
+//trainee logout
+			public function logout(){
+				session_destroy();
+				redirect('trainees/login');
+			}
 
 		}
-
-	
-*/
 	}
