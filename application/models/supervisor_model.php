@@ -52,4 +52,9 @@
 				return $this->db->insert('supervisors' , $data);
 			}
 		}
+
+		public function getTrainingDetails(){
+			$query = $this->db->get('training');
+			return $query->result_array();
+		}
 	}

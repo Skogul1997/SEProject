@@ -121,4 +121,16 @@
 			redirect('supervisors');
 		}
 
+		// View Trainings
+		public function viewTrainings(){
+			if ($this->session->userdata('supervisor_id')){
+				// Retrieving training details
+				$data['trainings'] = $this->supervisor_model->getTrainingDetails();
+				$this->load->view('templates/header');
+				$this->load->view('supervisors/training' , $data);
+				$this->load->view('templates/footer');
+			} else {
+				redirect('supervisors');
+			}
+		}
 	}
