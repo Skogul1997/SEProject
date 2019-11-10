@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['trainees'] = 'trainees/index';
 
+$route['supervisors/training'] = 'supervisors/view/training';
 $route['supervisors/home'] = 'supervisors/view/home';
 $route['supervisors/add_Trainee'] = 'supervisors/view/add_Trainee';
 $route['supervisors/view_Trainee'] = 'supervisors/view/view_Trainee';
