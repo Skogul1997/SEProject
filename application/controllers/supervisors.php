@@ -133,4 +133,10 @@
 				redirect('supervisors');
 			}
 		}
+
+		public function changeStatus(){
+			$trainee_id = $this->input->get('id');
+			$this->supervisor_model->changeStatus($trainee_id);
+			$this->viewTrainings();
+		}
 	}

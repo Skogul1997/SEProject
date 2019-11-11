@@ -57,4 +57,10 @@
 			$query = $this->db->get('training');
 			return $query->result_array();
 		}
+
+		public function changeStatus($trainee_id){
+			$this->db->set('status', 'In-Training');
+			$this->db->where('trainee_id', $trainee_id);
+			$this->db->update('training');
+		}
 	}
