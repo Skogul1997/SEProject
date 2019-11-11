@@ -10,6 +10,7 @@
 		}
 
 //trainee login
+
 		public function login(){
 
 			$data['title'] = 'Login';
@@ -27,25 +28,35 @@
 				$username = $this->input->post('username');
 				$password = md5($this->input->post('password'));
 
-				$user_id = $this->trainee_model->login($username,$password);
+				$trainee_id = $this->trainee_model->login($username,$enc_assword);
 
-				if($user_id){
-					session_start();
-					$this->session->set_flashdata('user_loggedin','You are now logged in');
-					$_SESSION["user_id"] = $user_id;
-					$_SESSION["password"] = $password;
-					redirct('index');
+				if($trainee_id){
+					$this->session->set_userdata('supervisor_id', $supervisor_id);
+					$this->session->set_flashdata('login_success','You are now logged in');
+					redirect('trainees/home');
 				} else {
 					$this->session->set_flashdata('login_failed','Login is Invalid');
-					redirect('trainees/login');
+					redirect('trainees');
 				}
 
 			}
 //trainee logout
 			public function logout(){
-				session_destroy();
-				redirect('trainees/login');
+				$this->session->sess_destroy();
+				redirect('trainees');
 			}
 
+//display all trainings
+			public function viewTrainings(){
+				if ($this->session->userdata('trainee_id')){
+					$data['trainings'] = $this->trainee_model->getTrainingDetails();
+					$this->load->view('templates/header');
+					$this->load->view('trainees/training', $data);
+					$this->load->view('templates/footer');
+				}
+				else{
+					redirect('trainees');
+				}
+			}
 		}
 	}
