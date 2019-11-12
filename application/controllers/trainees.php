@@ -16,14 +16,14 @@
 
 			$data['title'] = 'Login';
 
-			this->form_validation->set_rules('username', 'Username', 'required');
-			this->form_validation->set_rules('password', 'Password', 'required');
+			$this->form_validation->set_rules('username', 'Username', 'required');
+			$this->form_validation->set_rules('password', 'Password', 'required');
 
 			if ($this->form_validation_run() === FALSE) {
 
-				this->load->view('templates/header');
-				this->load->view('pages/login', $data);
-				this->load->view('templates/footer');
+				$this->load->view('templates/header');
+				$this->load->view('pages/login', $data);
+				$this->load->view('templates/footer');
 			} else {
 
 				$username = $this->input->post('username');
