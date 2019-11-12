@@ -10,7 +10,7 @@
 		<input type='text' name='username' class='form-control' placeholder='Enter Trainee ID' required autofocus>
 	</div>
 	<br>
-	<button type='submit' class='btn btn-primary'>Login</button>
+	<button type='submit' class='btn btn-primary'>Add Supervisor</button>
 
 <?php echo form_close(); ?>
 <a href='logout'>Logout</a><br>

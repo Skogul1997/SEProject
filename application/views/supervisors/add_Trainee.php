@@ -14,7 +14,7 @@
 		<input type='text' name='designation' class='form-control' placeholder='Enter Designation' required autofocus>
 	</div>
 	<br>
-	<button type='submit' class='btn btn-primary'>Login</button>
+	<button type='submit' class='btn btn-primary'>Add Trainee</button>
 
 <?php echo form_close(); ?>
 
