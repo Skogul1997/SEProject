@@ -1,11 +1,12 @@
 <?php if(count($trainees)==0){
 	echo 'No Trainees Available.';
-} else { foreach($trainees as $trainee): ?>
-	<div>
-		<?php echo $trainee['username']; ?>
-		<br>
-		<?php echo $trainee['designation']; ?>
-		<br>
-	</div>
+} else {
+	echo "<table><tr><th>Trainee_ID</th><th>Designation</th></tr>";
+	foreach($trainees as $trainee): ?>
+	<tr>
+		<td><?php echo $trainee['username']; ?></td>
+		<td><?php echo $trainee['designation']; ?></td>
+	</tr>
 <?php endforeach; } ?>
+</table>
 <a href='logout'>Logout</a><br>
